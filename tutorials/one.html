@@ -1032,6 +1032,112 @@ C = C - A;      /* inverse graph of A */
 </div>
 
 </section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Attribute Promotion</h3>
+<div class="slideContent" >
+<ul>
+<li>Assume you have two graphs One and Two with two different sets of node attributes. </li>
+<li>Graph One has attributes (int a, int b) and graph Two has attributes (int b, int c).</li>
+</ul>
+
+<pre><code>node(string id, int a, int b) ntOne;
+node(string id, int b, int c) ntTwo;
+link[] lt;
+
+graph(ntOne, lt) One = random(10);
+graph(ntTwo, lt) Two = random(10);
+</code></pre>
+
+<ul>
+<li>Graphs One and Two have different NodeTypes. </li>
+<li>To combined them into a graph Three, you specify graph Three&#39;s NodeType.</li>
+</ul>
+
+<pre><code>graph(ntOne, lt) Three = One;
+Three = Three .+ Two;    /* resultant graph only has node attributes a and b */
+
+graph(ntTwo, lt) Three = One;
+Three = Three .+ Two;    /* resultant graph only has node attributes b and c */
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Graph Subsetting</h3>
+<div class="slideContent" >
+<ul>
+<li>Suppose you want to get a subset of the graph. Reduce the graph.</li>
+</ul>
+
+<pre><code>node(string id, int age) nt;
+link[float weight] lt;
+graph(nt,lt) people = import(&quot;people.net&quot;);
+</code></pre>
+
+<ul>
+<li>You can create a new network only including people who are over the age of 18</li>
+</ul>
+
+<pre><code>graph(nt,lt) over18 = select node from people where age&gt;18;
+</code></pre>
+
+<ul>
+<li>You can create a new network only including links where the weight is above a certain threshold</li>
+</ul>
+
+<pre><code>graph(nt,lt) thresholded = select link from people where weight&gt;0.5;
+</code></pre>
+
+<ul>
+<li>You can get the highly connected people (above 10 links) in a new graph.</li>
+</ul>
+
+<pre><code>graph(nt,lt) hubs = select node from people where (in+out)&gt;10;
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Graph Export vs Save</h3>
+<div class="slideContent" >
+<ul>
+<li><strong>export</strong> - exports graph into a csv-like file where nodes (and node attributes) are listed before a &ldquo;-&rdquo; symbol and links (and link attributes) are listed after.</li>
+</ul>
+
+<pre><code>graph(nt,lt) ran = random(10);
+export(&quot;ran.csv&quot;,&quot;csv&quot;,ran);     /* can be read by excel or parsed to other formats */
+</code></pre>
+
+<ul>
+<li><strong>save</strong> - preferred method of saving a graph file</li>
+</ul>
+
+<pre><code>graph(nt,lt) ran = random(10);
+save &quot;ran.net&quot;, ran;
+
+run &quot;ran.net&quot;;                   /* to reload the network */
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>More Help</h3>
+<div class="slideContent" >
+<ul>
+<li>GEL comes with its own help funciton. </li>
+<li>The help and function documentation will be updated as the language continues to develop.</li>
+</ul>
+
+<pre><code>help;        /* to see all the help topics */
+help rand;   /* to see help description for function rand */
+</code></pre>
+
+</div>
+
+</section>
 
 
   </div>
